@@ -1,6 +1,4 @@
-require('dotenv').config();
-console.log(process.env)
-
+import OPENAI_API_KEY from "./apikeys";
 
 async function sendMessage() {
     var userMessage = document.getElementById("user-input").value;
@@ -104,6 +102,7 @@ async function sendToLLM(llm, message) {
         modelChoice = document.getElementById("model2").value
     }
     ans = call(modelChoice, message)
+    console.log(modelChoice + "Is the model")
     var response =  modelChoice + ": " + ans;
     displayMessage("llm-message", response, llm + "-chat");
 }
@@ -141,6 +140,19 @@ function clearChat(n){
     
 }
 
-function call(){
+async function call(modelChoice, message){
+    return
+    const response = await fetch('/api/openai', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            llm: llm,
+            message: message
+        })
+    });
+    const data = await response.json();
+    const generatedResponse = data.response;
 
 }

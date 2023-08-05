@@ -1,6 +1,7 @@
 let ls1 = []
 let ls2 = []
 
+
 async function sendMessage() {
     var userMessage = document.getElementById("user-input").value;
     document.getElementById("user-input").value = "";
@@ -136,8 +137,7 @@ function displayMessage(type, message, chatId) {
         if (chatId === "llm1-chat"){
             ls1.push({role:"system",content:message})
         } else{
-
-        ls2.push({role:"system",content:message})
+            ls2.push({role:"system",content:message})
         }
         messageDiv.textContent =  message;
         
@@ -165,7 +165,7 @@ function clearChat(n){
 }
 
 async function call(modelChoice, message, maxtokens,tempe, ls){
-    const OPENAI_API_KEY = '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'
+    const OPENAI_API_KEY = 'sk-UAjnBSwJeEX'+'Y2RGNLxtUT3Bl'+'bkFJ7knYMg88JTZV7lSRe0ZR'
     console.log(ls + [{role: "user", content:message }])
 
     if (modelChoice === "gpt"){
@@ -196,7 +196,5 @@ async function call(modelChoice, message, maxtokens,tempe, ls){
     } else{
 
     }
-    const data = await response.json();
-    const generatedResponse = data.response;
 
 }

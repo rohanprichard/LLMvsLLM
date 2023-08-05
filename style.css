@@ -1,12 +1,13 @@
+@import url('assets/CormorantGaramond-Regular.ttf');
 body {
     background-color: #1a1a1a;
     background-image: url("assets/Vector\ Smart\ Object.png");
-    
+    font-family: 'Raleway';
     color: #f0f0f0;
-    font-family: Arial, sans-serif;
     font-size: medium;
     margin: 0;
 }
+
 
 .Header{
     margin: 15px;

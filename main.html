@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LLM vs LLM</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js"></script>
+</head>
+<body>  
+<div class="Header">
+    <img src="assets/llmvslmm.png" alt="LLM vs LLM" srcset="" id="header-img">
+</div>
+
+<div class="chat-container">
+    <div class="chat-box" id="llm1-chat">
+        <div class="llm-message" id = "1msg1">Hello! I am <span class="llm1-name">LLM 1</span>! How can I help you?</div>
+    </div>
+    <div class="chat-box" id="llm2-chat">
+        <div class="llm-message" id = "1msg2">Greetings! I am <span class="llm2-name">LLM 2</span>! How can I help you?</div>
+    </div>
+</div>
+
+<div class="input-container">
+    <input type="text" id="user-input" class="user-input" placeholder="Your message...">
+    <button onclick="sendMessage()" class="send-button">Send</button>
+</div>
+
+<div class="radio-container">
+    <input type="radio" class="llm-selector" name="llm" value="llm1" checked> <span class="llm1-name">LLM 1</span>
+    <input type="radio" class="llm-selector" name="llm" value="llm2"> <span class="llm2-name">LLM 2</span>
+    <input type="radio" class="llm-selector" name="llm" value="dual"> Dual Mode
+</div>
+
+<div class="options-container">
+
+    <div class="options-box" id="llm1-opts">
+        <div class="slide-container">
+            <div class="model-container">
+                <label for="model1">LLM: &nbsp;</label>
+                <select name="model1" id="model1" onchange="setName1()">
+                    <option value="" default> </option>
+                    <option value="gpt">GPT-3.5</option>
+                    <option value="llama">Llama2</option>
+                </select>
+            </div>
+
+            <label for="Temperature1">Temperature</label>
+            <input type="range" min="1" max="100" value="50" class="slider" id="Temperature1">
+            <label for="MaxTokens1">Max Tokens</label>
+            <input type="range" min="1" max="100" value="50" class="slider" id="MaxTokens1">
+        </div>
+    </div>
+
+    <div class="options-box" id="llm2-opts">
+        <div class="slide-container">
+            <div class="model-container">
+                <label for="model2">LLM: &nbsp;</label>
+                <select name="model2" id="model2" onchange="setName2()">
+                    <option value="" default> </option>
+                    <option value="gpt">GPT-3.5</option>
+                    <option value="llama">Llama2</option>
+                </select>
+            </div>
+
+            <label for="Temperature2">Temperature</label>
+            <input type="range" min="1" max="100" value="50" class="slider" id="Temperature2">
+            <label for="MaxTokens2">Max Tokens</label>
+            <input type="range" min="1" max="100" value="50" class="slider" id="Max Tokens2">
+        </div>
+    </div>
+</div>
+</body>
+</html>

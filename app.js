@@ -165,7 +165,7 @@ function clearChat(n){
 }
 
 async function call(modelChoice, message, maxtokens,tempe, ls){
-    const OPENAI_API_KEY = 'sk-UAjnBSwJeEX'+'Y2RGNLxtUT3Bl'+'bkFJ7knYMg88JTZV7lSRe0ZR'
+    const OPENAI_API_KEY = await fetch("/.netlify/functions/getApiKey");
     console.log(ls + [{role: "user", content:message }])
 
     if (modelChoice === "gpt"){

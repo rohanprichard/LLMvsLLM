@@ -1,4 +1,5 @@
-import OPENAI_API_KEY from "./apikeys";
+let ls1 = []
+let ls2 = []
 
 async function sendMessage() {
     var userMessage = document.getElementById("user-input").value;
@@ -95,13 +96,22 @@ function getSelectedLLM() {
 
 
 async function sendToLLM(llm, message) {
-    var modelChoice
+    var modelChoice, max_tokens, temperature, oldmsgs
+
     if (llm === "llm1"){
         modelChoice = document.getElementById("model1").value
+        temperature = parseFloat(document.getElementById("Temperature1").value)
+        max_tokens = parseInt(document.getElementById("MaxTokens1").value)
+        oldmsgs = ls1
+
+
     } else{
         modelChoice = document.getElementById("model2").value
+        temperature = parseFloat(document.getElementById("Temperature2").value)
+        max_tokens = parseInt(document.getElementById("MaxTokens2").value)
+        oldmsgs = ls2
     }
-    ans = call(modelChoice, message)
+    ans = await call(modelChoice, message,max_tokens,temperature, oldmsgs)
     console.log(modelChoice + "Is the model")
     var response =  modelChoice + ": " + ans;
     displayMessage("llm-message", response, llm + "-chat");
@@ -116,7 +126,19 @@ function displayMessage(type, message, chatId) {
 
     if (type === "user-message"){    
         messageDiv.textContent =  "Me: " + message;
+        if (chatId === "llm1-chat"){
+            ls1.push({role:"user",content:message})
+        }
+        else{
+            ls2.push({role:"user",content:message})
+        }
     } else {
+        if (chatId === "llm1-chat"){
+            ls1.push({role:"system",content:message})
+        } else{
+
+        ls2.push({role:"system",content:message})
+        }
         messageDiv.textContent =  message;
         
     }
@@ -130,8 +152,10 @@ function clearChat(n){
         var node
         if (n == 1){
             node = document.getElementById('1msg1');
+            ls1 = []
         }else{
             node = document.getElementById('1msg2');  
+            ls2 = []
         }
         const clone = node.cloneNode(true);
         const parentNode = node.parentNode;
@@ -140,18 +164,38 @@ function clearChat(n){
     
 }
 
-async function call(modelChoice, message){
-    return
-    const response = await fetch('/api/openai', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            llm: llm,
-            message: message
-        })
-    });
+async function call(modelChoice, message, maxtokens,tempe, ls){
+    const OPENAI_API_KEY = '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'
+    console.log(ls + [{role: "user", content:message }])
+
+    if (modelChoice === "gpt"){
+        opts = {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${OPENAI_API_KEY}`,
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify({
+                model: "gpt-3.5-turbo",
+                messages: ls ,
+                max_tokens:maxtokens,
+                temperature:tempe
+
+            })
+        }
+        try {
+            const response = await fetch('https://api.openai.com/v1/chat/completions', opts);        
+            const data = await response.json()
+            console.log(data.choices[0].message.content)
+            return data.choices[0].message.content
+            
+
+        } catch (error) {
+            console.error(error)
+        }
+    } else{
+
+    }
     const data = await response.json();
     const generatedResponse = data.response;
 
